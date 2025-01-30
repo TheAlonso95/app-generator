@@ -14,9 +14,12 @@ type Swagger struct {
 		Title   string `yaml:"title"`
 		Version string `yaml:"version"`
 	} `yaml:"info"`
+	Paths map[string]map[string]struct {
+		Summary string `yaml:"summary"`
+	} `yaml:"paths"`
 }
 
-// ReadYAML reads a Swagger YAML file and parses it into a Swagger struct
+// ReadYAML reads a Swagger YAML file and parses it
 func ReadYAML(filePath string) (*Swagger, error) {
 	data, err := os.ReadFile(filePath)
 	if err != nil {

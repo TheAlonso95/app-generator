@@ -2,3 +2,18 @@ openapi: "3.0.0"
 info:
   title: "Sample API"
   version: "1.0.0"
+paths:
+  /:
+    get:
+      summary: "Welcome to Sample API!"
+  /version:
+    get:
+      summary: "API Version: 1.0.0"
+  /users:
+    get:
+      summary: "Retrieve list of users"
+  /users/{id}:
+    get:
+      summary: "Get user by ID"
+    delete:
+      summary: "Delete a user"
