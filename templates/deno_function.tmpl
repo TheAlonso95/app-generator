@@ -1,0 +1,29 @@
+import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+
+const router = new Router();
+{{range $path, $methods := .Routes}}
+{{range $method, $info := $methods}}
+
+// {{$info.Summary}}
+router.{{$method | ToLower}}("{{$path}}", async (ctx) => {
+    {{if $info.Requests}}
+    const body = await ctx.request.body().value;
+    console.log("Received:", body);
+    {{end}}
+
+    {{if $info.Responses}}
+    ctx.response.status = 200;
+    ctx.response.body = {{GenerateResponseExample $info.Responses}};
+    {{else}}
+    ctx.response.status = 204;
+    {{end}}
+});
+{{end}}
+{{end}}
+
+const app = new Application();
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+console.log("Server running on http://localhost:{{.Port}}");
+await app.listen({ port: {{.Port}} });

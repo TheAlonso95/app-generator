@@ -1,19 +1,96 @@
 openapi: "3.0.0"
 info:
-  title: "Sample API"
+  title: "Todo API"
   version: "1.0.0"
 paths:
-  /:
+  /todos:
     get:
-      summary: "Welcome to Sample API!"
-  /version:
+      summary: "Get all todos"
+      responses:
+        "200":
+          description: "List of todos"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    title:
+                      type: string
+                    completed:
+                      type: boolean
+    post:
+      summary: "Create a new todo"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+      responses:
+        "201":
+          description: "Todo created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  completed:
+                    type: boolean
+  /todos/{id}:
     get:
-      summary: "API Version: 1.0.0"
-  /users:
-    get:
-      summary: "Retrieve list of users"
-  /users/{id}:
-    get:
-      summary: "Get user by ID"
+      summary: "Get a todo by ID"
+      responses:
+        "200":
+          description: "Todo details"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  completed:
+                    type: boolean
+    put:
+      summary: "Update a todo"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                completed:
+                  type: boolean
+      responses:
+        "200":
+          description: "Todo updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  completed:
+                    type: boolean
     delete:
-      summary: "Delete a user"
+      summary: "Delete a todo"
+      responses:
+        "204":
+          description: "Todo deleted"

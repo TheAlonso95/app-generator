@@ -15,14 +15,15 @@ func main() {
 		log.Fatalf("Error reading YAML: %v", err)
 	}
 
-	// Generate Supabase Edge Function
-	outputFile := "supabase_function.ts"
+	// Define Supabase functions folder
+	functionsDir := "functions"
 	port := 8000
 
-	err = codegen.GenerateDenoFunction(swagger, outputFile, port)
+	// Generate Edge Functions
+	err = codegen.GenerateDenoFunctions(swagger, functionsDir, port)
 	if err != nil {
 		log.Fatalf("Error generating code: %v", err)
 	}
 
-	fmt.Println("🎉 Supabase Edge Function with dynamic routes generated successfully!")
+	fmt.Println("🎉 Supabase Edge Functions successfully generated!")
 }
