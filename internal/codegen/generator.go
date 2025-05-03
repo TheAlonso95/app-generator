@@ -132,6 +132,7 @@ func GenerateDenoFunctions(swagger *fileparser.Swagger, functionsDir string, por
 		fmt.Printf("\n📝 Function Data:\n")
 		fmt.Printf("  Port: %d\n", data.Port)
 		fmt.Printf("  Routes:\n")
+
 		for r, m := range data.Routes {
 			fmt.Printf("    %s: %+v\n", r, m)
 		}
@@ -152,4 +153,18 @@ func GenerateDenoFunctions(swagger *fileparser.Swagger, functionsDir string, por
 	}
 
 	return nil
+}
+
+func groupSubPaths(paths fileparser.APIRoutes) map[string]fileparser.APIRoutes {
+	groupedPath := make(map[string]fileparser.APIRoutes)
+
+	for route, methods := range paths {
+		baseRoute := ExtractBaseRoute(route)
+		if _, exists := groupedPath[baseRoute]; !exists {
+			groupedPath[baseRoute] = make(fileparser.APIRoutes)
+		}
+		groupedPath[baseRoute][route] = methods
+	}
+
+	return groupedPath
 }

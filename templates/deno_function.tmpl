@@ -1,11 +1,11 @@
-import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { Application, Router, Context } from "https://deno.land/x/oak/mod.ts";
 
 const router = new Router();
 {{range $path, $methods := .Routes}}
 {{range $method, $info := $methods}}
 
 // {{$info.Summary}}
-router.{{$method | ToLower}}("{{$path}}", async (ctx) => {
+router.{{$method | ToLower}}("{{$path}}", async (ctx: Context) => {
     {{if $info.Requests}}
     const body = await ctx.request.body().value;
     console.log("Received:", body);
